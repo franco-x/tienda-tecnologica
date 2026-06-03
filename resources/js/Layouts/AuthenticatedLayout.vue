@@ -44,7 +44,7 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
-                            <div class="relative ms-3">
+                            <div class="relative ms-3" v-if="$page.props.auth.user">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -85,6 +85,14 @@ const showingNavigationDropdown = ref(false);
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
+                            </div>
+                            <div class="relative ms-3" v-else>
+                                <Link
+                                    :href="route('login')"
+                                    class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                                >
+                                    Iniciar Sesión
+                                </Link>
                             </div>
                         </div>
 
@@ -151,6 +159,7 @@ const showingNavigationDropdown = ref(false);
                     <!-- Responsive Settings Options -->
                     <div
                         class="border-t border-gray-200 pb-1 pt-4"
+                        v-if="$page.props.auth.user"
                     >
                         <div class="px-4">
                             <div
@@ -173,6 +182,19 @@ const showingNavigationDropdown = ref(false);
                                 as="button"
                             >
                                 Log Out
+                            </ResponsiveNavLink>
+                        </div>
+                    </div>
+                    <div
+                        class="border-t border-gray-200 pb-1 pt-4"
+                        v-else
+                    >
+                        <div class="mt-3 space-y-1">
+                            <ResponsiveNavLink :href="route('login')">
+                                Iniciar Sesión
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('register')">
+                                Registrarse
                             </ResponsiveNavLink>
                         </div>
                     </div>
